@@ -15,7 +15,7 @@ Create a .env file with:
 
 ```
 # Database
-DATABASE_URL=postgresql://postgres:Vaibhav%4014@localhost:54321/Vaibhav
+DATABASE_URL=postgresql://postgres:Vaibhav%404014@localhost:54321/Vaibhav
 DATABASE_ECHO=False
 
 # Security

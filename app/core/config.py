@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     SERVER_HOST: str = "0.0.0.0"
     SERVER_PORT: int = 8000
 
-    DATABASE_URL: str = "postgresql://postgres:Vaibhav%4014@localhost:54321/Vaibhav"
+    DATABASE_URL: str = "postgresql://postgres:Vaibhav%404014@localhost:54321/Vaibhav"
     DATABASE_ECHO: bool = False
 
     SECRET_KEY: str = "your-secret-key-change-in-production"

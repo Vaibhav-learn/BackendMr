@@ -30,7 +30,7 @@ pip install -r requirements.txt
 ### 4. Setup Environment Variables
 Create a `.env` file in the root directory:
 \`\`\`
-DATABASE_URL=postgresql://postgres:Vaibhav%4014@localhost:54321/Vaibhav
+DATABASE_URL=postgresql://postgres:Vaibhav%404014@localhost:54321/Vaibhav
 SECRET_KEY=your-super-secret-key-here
 DEBUG=True
 SERVER_HOST=0.0.0.0
