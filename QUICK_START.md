@@ -1,7 +1,3 @@
-"""
-Quick Start Commands
-"""
-
 # ⚡ QUICK START - MR & ASM Reporting App Backend
 
 ## 🚀 Getting Started in 5 Minutes

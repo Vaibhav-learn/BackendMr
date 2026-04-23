@@ -1,7 +1,3 @@
-"""
-Backend Project Summary
-"""
-
 # 🎉 FastAPI Backend - Complete Implementation
 
 ## Project Overview

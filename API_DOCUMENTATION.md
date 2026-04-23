@@ -1,11 +1,5 @@
-"""
-API Documentation and Examples
-"""
 
-"""
-=============================================================================
 MR & ASM Reporting Application - API Endpoints Documentation
-=============================================================================
 
 Base URL: http://localhost:8000/api/v1
 
@@ -13,9 +7,7 @@ Authentication:
 - Use JWT tokens obtained from login endpoint
 - Include token in Authorization header: "Bearer <token>"
 
-=============================================================================
 AUTHENTICATION ENDPOINTS
-=============================================================================
 
 1. Register User
 POST /auth/register
@@ -74,9 +66,7 @@ Request:
     "new_password": "NewPassword456"
 }
 
-=============================================================================
 ATTENDANCE ENDPOINTS
-=============================================================================
 
 1. Check-In
 POST /attendance/check-in
@@ -115,9 +105,7 @@ GET /attendance/today
 4. Get Attendance History
 GET /attendance/history?limit=30
 
-=============================================================================
 DOCTOR ENDPOINTS
-=============================================================================
 
 1. Add Doctor
 POST /doctors
@@ -150,9 +138,7 @@ PUT /doctors/{doctor_id}
 5. Delete Doctor
 DELETE /doctors/{doctor_id}
 
-=============================================================================
 CHEMIST ENDPOINTS
-=============================================================================
 
 1. Add Chemist
 POST /chemists
@@ -170,9 +156,7 @@ Request:
 2. Get Chemist List
 GET /chemists
 
-=============================================================================
 DISTRIBUTOR ENDPOINTS
-=============================================================================
 
 1. Add Distributor
 POST /distributors
@@ -189,9 +173,7 @@ Request:
 2. Get Distributor List
 GET /distributors
 
-=============================================================================
 DCR (DOCTOR CALL REPORT) ENDPOINTS
-=============================================================================
 
 1. Create DCR
 POST /dcr
@@ -212,9 +194,7 @@ GET /dcr
 3. Get DCR Details
 GET /dcr/{dcr_id}
 
-=============================================================================
 ORDER ENDPOINTS
-=============================================================================
 
 1. Create Order
 POST /orders
@@ -242,9 +222,7 @@ Request:
     "rejection_reason": null
 }
 
-=============================================================================
 LEAVE ENDPOINTS
-=============================================================================
 
 1. Apply Leave
 POST /leaves
@@ -269,9 +247,7 @@ Request:
     "rejection_reason": null
 }
 
-=============================================================================
 TARGET ENDPOINTS
-=============================================================================
 
 1. Get Targets
 GET /targets
@@ -289,9 +265,7 @@ Request:
     "doctor_visits_target": 50
 }
 
-=============================================================================
 SALARY ENDPOINTS
-=============================================================================
 
 1. Get Salary Slips
 GET /salary/slips
@@ -305,9 +279,7 @@ GET /salary/slips/{slip_id}
 GET /salary/slips/{month}/{year}
 Example: GET /salary/slips/January/2024
 
-=============================================================================
 NOTIFICATION ENDPOINTS
-=============================================================================
 
 1. Get Notifications
 GET /notifications
@@ -328,9 +300,7 @@ Request:
 4. Mark All as Read
 POST /notifications/mark-all-read
 
-=============================================================================
 PROFILE ENDPOINTS
-=============================================================================
 
 1. Get Profile
 GET /profile
@@ -346,9 +316,7 @@ Request:
     "emergency_contact_phone": "+919876543212"
 }
 
-=============================================================================
 ADMIN ENDPOINTS
-=============================================================================
 
 1. Get All Users
 GET /admin/users?skip=0&limit=100
@@ -389,9 +357,7 @@ GET /admin/pending-leaves
 10. Get Dashboard Statistics
 GET /admin/dashboard/stats
 
-=============================================================================
 ERROR RESPONSES
-=============================================================================
 
 All errors return standard error format:
 {
@@ -408,6 +374,3 @@ Common HTTP Status Codes:
 - 403: Forbidden
 - 404: Not Found
 - 500: Internal Server Error
-
-=============================================================================
-"""

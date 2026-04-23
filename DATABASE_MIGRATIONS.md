@@ -1,7 +1,3 @@
-"""
-Database Migration and Setup Instructions
-"""
-
 # Alembic Configuration for Database Migrations
 
 ## Initial Setup
