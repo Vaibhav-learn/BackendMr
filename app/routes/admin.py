@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models import User, Order, Leave, Attendance, Doctor, Chemist, Distributor
 from app.schemas import UserResponse, OrderResponse, LeaveResponse
-from typing import List
+from typing import List, Optional
 
 router = APIRouter(prefix="/api/v1/admin", tags=["Admin"])
 
@@ -34,8 +34,8 @@ def get_user_details(user_id: int, db: Session = Depends(get_db)):
 @router.get("/attendance", response_model=List[dict])
 def get_all_attendance(
     db: Session = Depends(get_db),
-    date_from: str = None,
-    date_to: str = None
+    date_from: Optional[str] = None,
+    date_to: Optional[str] = None
 ):
     query = db.query(Attendance)
     

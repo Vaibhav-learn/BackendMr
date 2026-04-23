@@ -64,7 +64,7 @@ def delete_doctor(doctor_id: int, db: Session = Depends(get_db)):
             detail="Doctor not found"
         )
     
-    doctor.is_active = False
+    doctor.is_active = False  # type: ignore
     db.commit()
     
     return None

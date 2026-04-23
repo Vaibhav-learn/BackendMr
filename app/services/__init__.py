@@ -40,7 +40,7 @@ class UserService:
         user = UserService.get_user_by_email(db, email)
         if not user:
             return None
-        if not verify_password(password, user.hashed_password):
+        if not verify_password(password, str(user.hashed_password)):  # type: ignore
             return None
         return user
     
@@ -48,7 +48,7 @@ class UserService:
     def update_last_login(db: Session, user_id: int):
         user = db.query(User).filter(User.id == user_id).first()
         if user:
-            user.last_login = datetime.utcnow()
+            user.last_login = datetime.utcnow()  # type: ignore
             db.commit()
 
 
@@ -78,10 +78,10 @@ class AttendanceService:
         if not attendance:
             return None
         
-        attendance.check_out_time = datetime.utcnow()
-        attendance.check_out_latitude = check_out_data.latitude
-        attendance.check_out_longitude = check_out_data.longitude
-        attendance.check_out_selfie_url = check_out_data.selfie_url
+        attendance.check_out_time = datetime.utcnow()  # type: ignore
+        attendance.check_out_latitude = check_out_data.latitude  # type: ignore
+        attendance.check_out_longitude = check_out_data.longitude  # type: ignore
+        attendance.check_out_selfie_url = check_out_data.selfie_url  # type: ignore
         
         db.commit()
         db.refresh(attendance)
@@ -141,8 +141,8 @@ class DoctorService:
     def increment_visit_count(db: Session, doctor_id: int):
         doctor = DoctorService.get_doctor(db, doctor_id)
         if doctor:
-            doctor.visit_frequency += 1
-            doctor.last_visited = datetime.utcnow()
+            doctor.visit_frequency = int(doctor.visit_frequency) + 1  # type: ignore
+            doctor.last_visited = datetime.utcnow()  # type: ignore
             db.commit()
 
 

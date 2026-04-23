@@ -34,16 +34,16 @@ def login(credentials: LoginRequest, db: Session = Depends(get_db)):
             detail="Invalid credentials"
         )
     
-    if not user.is_active:
+    if not user.is_active:  # type: ignore
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="User account is inactive"
         )
 
-    UserService.update_last_login(db, user.id)
+    UserService.update_last_login(db, int(user.id))  # type: ignore
 
-    access_token = create_access_token({"sub": str(user.id), "email": user.email})
-    refresh_token = create_refresh_token({"sub": str(user.id)})
+    access_token = create_access_token({"sub": str(user.id), "email": str(user.email)})  # type: ignore
+    refresh_token = create_refresh_token({"sub": str(user.id)})  # type: ignore
     
     return {
         "access_token": access_token,
@@ -62,7 +62,13 @@ def refresh_token(request: RefreshTokenRequest, db: Session = Depends(get_db)):
             detail="Invalid refresh token"
         )
     
-    user_id = int(payload.get("sub"))
+    user_id_val = payload.get("sub")
+    if user_id_val is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token"
+        )
+    user_id = int(user_id_val)
     user = UserService.get_user_by_id(db, user_id)
     
     if not user:
@@ -96,13 +102,13 @@ def change_password(
     
     from app.core.security import verify_password, hash_password
     
-    if not verify_password(request.old_password, user.hashed_password):
+    if not verify_password(request.old_password, str(user.hashed_password)):  # type: ignore
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid old password"
         )
     
-    user.hashed_password = hash_password(request.new_password)
+    user.hashed_password = hash_password(request.new_password)  # type: ignore
     db.commit()
     
     return {"message": "Password changed successfully"}

@@ -56,7 +56,7 @@ def mark_as_read(
             detail="Notification not found"
         )
     
-    notification.is_read = read_data.is_read
+    notification.is_read = read_data.is_read  # type: ignore
     db.commit()
     db.refresh(notification)
     

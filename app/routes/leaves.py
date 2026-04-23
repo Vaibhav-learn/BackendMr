@@ -67,8 +67,8 @@ def approve_leave(
             detail="Leave not found"
         )
     
-    leave.status = "approved" if approval.approved else "rejected"
-    leave.approved_by = admin_id
+    leave.status = "approved" if approval.approved else "rejected"  # type: ignore
+    leave.approved_by = admin_id  # type: ignore
     
     db.commit()
     db.refresh(leave)

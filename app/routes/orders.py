@@ -66,9 +66,9 @@ def approve_order(
             detail="Order not found"
         )
     
-    order.status = "approved" if approval.approved else "rejected"
-    order.approved_by = admin_id
-    order.approval_date = datetime.utcnow()
+    order.status = "approved" if approval.approved else "rejected"  # type: ignore
+    order.approved_by = admin_id  # type: ignore
+    order.approval_date = datetime.utcnow()  # type: ignore
     
     db.commit()
     db.refresh(order)
