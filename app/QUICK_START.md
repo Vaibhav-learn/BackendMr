@@ -21,13 +21,14 @@ pip install -r requirements.txt
 
 ### Step 3: Configure Database
 ```bash
-# Open .env file and update
-DATABASE_URL=postgresql://postgres:password@localhost:5432/mr_reporting_db
+# .env file is already configured with PHARMA database
+DATABASE_URL=postgresql://postgres:Vaibhav%4014@localhost:54321/Vaibhav
 ```
 
-### Step 4: Create Database (PostgreSQL)
+### Step 4: Using Existing Database
 ```bash
-createdb mr_reporting_db
+# Database 'Vaibhav' already exists from PHARMA-BACKEND-CORE
+# No database creation needed
 ```
 
 ### Step 5: Initialize Tables
@@ -94,7 +95,8 @@ psql -U postgres
 \l
 
 # Connect to database
-\c mr_reporting_db
+# Connect to PHARMA database on port 54321
+psql -U postgres -h localhost -p 54321 -d Vaibhav
 
 # List tables
 \dt
@@ -109,10 +111,10 @@ SELECT * FROM users;
 DROP TABLE users;
 
 # Backup database
-pg_dump -U postgres mr_reporting_db > backup.sql
+pg_dump -U postgres -h localhost -p 54321 Vaibhav > backup.sql
 
 # Restore database
-psql -U postgres mr_reporting_db < backup.sql
+psql -U postgres -h localhost -p 54321 Vaibhav < backup.sql
 ```
 
 ---
@@ -136,10 +138,10 @@ pip install -r requirements.txt
 psql -U postgres
 
 # Update DATABASE_URL in .env
-DATABASE_URL=postgresql://postgres:your_password@localhost:5432/mr_reporting_db
+DATABASE_URL=postgresql://postgres:Vaibhav%4014@localhost:54321/Vaibhav
 
-# Create database if not exists
-createdb mr_reporting_db
+# Using existing PHARMA database 'Vaibhav'
+# No database creation needed
 ```
 
 ### Issue: Port 8000 Already in Use

@@ -35,14 +35,11 @@ alembic current
 
 ## PostgreSQL Commands
 
-# Connect to PostgreSQL
-psql -U postgres
+# Connect to PostgreSQL (PHARMA database)
+psql -U postgres -h localhost -p 54321
 
-# Create database
-CREATE DATABASE mr_reporting_db;
-
-# Connect to database
-\c mr_reporting_db
+# Using existing database
+\c Vaibhav
 
 # List tables
 \dt
@@ -50,11 +47,8 @@ CREATE DATABASE mr_reporting_db;
 # Describe table
 \d table_name
 
-# Drop database
-DROP DATABASE mr_reporting_db;
-
 # Backup database
-pg_dump -U postgres mr_reporting_db > backup.sql
+pg_dump -U postgres -h localhost -p 54321 Vaibhav > backup.sql
 
 # Restore database
-psql -U postgres mr_reporting_db < backup.sql
+psql -U postgres -h localhost -p 54321 Vaibhav < backup.sql

@@ -145,8 +145,8 @@ cp .env.example .env
 
 ### 2. Database Setup
 ```bash
-# Create PostgreSQL database
-createdb mr_reporting_db
+# Using existing PHARMA database 'Vaibhav' on port 54321
+# No need to create database - it already exists
 
 # Initialize tables
 python -c "from app.core.database import init_db; init_db()"
@@ -181,8 +181,8 @@ python -m uvicorn app.main:app --reload
 ## 🎯 Next Steps
 
 1. **Setup PostgreSQL database**
-   - Create database: `createdb mr_reporting_db`
-   - Update DATABASE_URL in .env
+   - Using existing PHARMA database: `Vaibhav` at `localhost:54321`
+   - DATABASE_URL in .env is already configured
 
 2. **Install dependencies**
    - `pip install -r requirements.txt`

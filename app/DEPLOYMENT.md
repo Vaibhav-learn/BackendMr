@@ -15,7 +15,7 @@ Create a .env file with:
 
 ```
 # Database
-DATABASE_URL=postgresql://prod_user:secure_password@prod_db_host:5432/mr_reporting_db
+DATABASE_URL=postgresql://postgres:Vaibhav%4014@localhost:54321/Vaibhav
 DATABASE_ECHO=False
 
 # Security
@@ -117,7 +117,7 @@ Setup log rotation:
 Automated daily backup:
 ```bash
 # Add to crontab
-0 2 * * * pg_dump -U postgres mr_reporting_db | gzip > /backups/mr_reporting_db_$(date +\%Y\%m\%d).sql.gz
+0 2 * * * pg_dump -U postgres -h localhost -p 54321 Vaibhav | gzip > /backups/Vaibhav_$(date +\%Y\%m\%d).sql.gz
 ```
 
 ## Health Checks

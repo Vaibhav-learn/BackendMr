@@ -30,7 +30,7 @@ pip install -r requirements.txt
 ### 4. Setup Environment Variables
 Create a `.env` file in the root directory:
 \`\`\`
-DATABASE_URL=postgresql://postgres:password@localhost:5432/mr_reporting_db
+DATABASE_URL=postgresql://postgres:Vaibhav%4014@localhost:54321/Vaibhav
 SECRET_KEY=your-super-secret-key-here
 DEBUG=True
 SERVER_HOST=0.0.0.0
@@ -114,8 +114,8 @@ sudo apt-get install postgresql postgresql-contrib
 
 ### Create Database
 \`\`\`bash
-psql -U postgres
-CREATE DATABASE mr_reporting_db;
+# Database 'Vaibhav' should already exist from PHARMA-BACKEND-CORE setup
+# Connect with: psql -U postgres -h localhost -p 54321
 \`\`\`
 
 ## Technologies

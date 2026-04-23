@@ -330,7 +330,8 @@ The backend is:
 
 1. **Database Setup**
    ```bash
-   createdb mr_reporting_db
+   # Using existing PHARMA database 'Vaibhav'
+   # No database creation needed
    ```
 
 2. **Environment Configuration**
