@@ -1,7 +1,3 @@
-"""
-Deployment Guide for Production
-"""
-
 # Production Deployment Guide for MR & ASM Reporting App Backend
 
 ## Pre-Deployment Checklist
