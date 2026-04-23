@@ -1,7 +1,3 @@
-"""
-Testing Guide - Test Cases and Examples
-"""
-
 # Test Cases for MR & ASM Reporting Application
 
 ## Prerequisites
