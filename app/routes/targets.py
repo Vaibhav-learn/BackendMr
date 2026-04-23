@@ -1,6 +1,3 @@
-"""
-Target Management Routes
-"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -17,7 +14,6 @@ def create_target(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    """Create target (Admin only)"""
     db_target = Target(
         user_id=user_id,
         month=target.month,
@@ -36,7 +32,6 @@ def create_target(
 
 @router.get("", response_model=List[TargetResponse])
 def get_my_targets(user_id: int, db: Session = Depends(get_db)):
-    """Get all targets for current user"""
     targets = db.query(Target).filter(
         Target.user_id == user_id
     ).order_by(Target.year.desc(), Target.month.desc()).all()
@@ -45,7 +40,6 @@ def get_my_targets(user_id: int, db: Session = Depends(get_db)):
 
 @router.get("/{target_id}", response_model=TargetResponse)
 def get_target(target_id: int, db: Session = Depends(get_db)):
-    """Get target details"""
     target = db.query(Target).filter(Target.id == target_id).first()
     
     if not target:

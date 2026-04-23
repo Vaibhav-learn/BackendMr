@@ -1,6 +1,3 @@
-"""
-Service Layer for Business Logic
-"""
 from sqlalchemy.orm import Session
 from app.models import User, Attendance, Doctor, Chemist, Distributor
 from app.schemas import (
@@ -13,11 +10,9 @@ from typing import Optional, List
 
 
 class UserService:
-    """User management service"""
     
     @staticmethod
     def create_user(db: Session, user_data: UserCreate) -> User:
-        """Create a new user"""
         db_user = User(
             employee_id=user_data.employee_id,
             email=user_data.email,
@@ -34,17 +29,14 @@ class UserService:
     
     @staticmethod
     def get_user_by_email(db: Session, email: str) -> Optional[User]:
-        """Get user by email"""
         return db.query(User).filter(User.email == email).first()
     
     @staticmethod
     def get_user_by_id(db: Session, user_id: int) -> Optional[User]:
-        """Get user by ID"""
         return db.query(User).filter(User.id == user_id).first()
     
     @staticmethod
     def authenticate_user(db: Session, email: str, password: str) -> Optional[User]:
-        """Authenticate user with email and password"""
         user = UserService.get_user_by_email(db, email)
         if not user:
             return None
@@ -54,7 +46,6 @@ class UserService:
     
     @staticmethod
     def update_last_login(db: Session, user_id: int):
-        """Update last login timestamp"""
         user = db.query(User).filter(User.id == user_id).first()
         if user:
             user.last_login = datetime.utcnow()
@@ -62,11 +53,9 @@ class UserService:
 
 
 class AttendanceService:
-    """Attendance management service"""
     
     @staticmethod
     def check_in(db: Session, user_id: int, check_in_data: AttendanceCheckIn) -> Attendance:
-        """Record check-in"""
         attendance = Attendance(
             user_id=user_id,
             check_in_time=datetime.utcnow(),
@@ -81,7 +70,6 @@ class AttendanceService:
     
     @staticmethod
     def check_out(db: Session, user_id: int, check_out_data: AttendanceCheckOut) -> Optional[Attendance]:
-        """Record check-out"""
         attendance = db.query(Attendance).filter(
             Attendance.user_id == user_id,
             Attendance.check_out_time == None
@@ -101,7 +89,6 @@ class AttendanceService:
     
     @staticmethod
     def get_today_attendance(db: Session, user_id: int) -> Optional[Attendance]:
-        """Get today's attendance record"""
         today = datetime.utcnow().date()
         return db.query(Attendance).filter(
             Attendance.user_id == user_id,
@@ -110,18 +97,15 @@ class AttendanceService:
     
     @staticmethod
     def get_attendance_history(db: Session, user_id: int, limit: int = 30) -> List[Attendance]:
-        """Get attendance history"""
         return db.query(Attendance).filter(
             Attendance.user_id == user_id
         ).order_by(Attendance.check_in_time.desc()).limit(limit).all()
 
 
 class DoctorService:
-    """Doctor management service"""
     
     @staticmethod
     def create_doctor(db: Session, mr_id: int, doctor_data: DoctorCreate) -> Doctor:
-        """Create a new doctor profile"""
         doctor = Doctor(
             mr_id=mr_id,
             **doctor_data.dict()
@@ -133,17 +117,14 @@ class DoctorService:
     
     @staticmethod
     def get_doctor(db: Session, doctor_id: int) -> Optional[Doctor]:
-        """Get doctor by ID"""
         return db.query(Doctor).filter(Doctor.id == doctor_id).first()
     
     @staticmethod
     def get_mr_doctors(db: Session, mr_id: int) -> List[Doctor]:
-        """Get all doctors for an MR"""
         return db.query(Doctor).filter(Doctor.mr_id == mr_id, Doctor.is_active == True).all()
     
     @staticmethod
     def update_doctor(db: Session, doctor_id: int, update_data: dict) -> Optional[Doctor]:
-        """Update doctor profile"""
         doctor = DoctorService.get_doctor(db, doctor_id)
         if not doctor:
             return None
@@ -158,7 +139,6 @@ class DoctorService:
     
     @staticmethod
     def increment_visit_count(db: Session, doctor_id: int):
-        """Increment doctor visit count"""
         doctor = DoctorService.get_doctor(db, doctor_id)
         if doctor:
             doctor.visit_frequency += 1
@@ -167,11 +147,9 @@ class DoctorService:
 
 
 class ChemistService:
-    """Chemist management service"""
     
     @staticmethod
     def create_chemist(db: Session, mr_id: int, chemist_data: ChemistCreate) -> Chemist:
-        """Create a new chemist profile"""
         chemist = Chemist(
             mr_id=mr_id,
             **chemist_data.dict()
@@ -183,13 +161,10 @@ class ChemistService:
     
     @staticmethod
     def get_mr_chemists(db: Session, mr_id: int) -> List[Chemist]:
-        """Get all chemists for an MR"""
         return db.query(Chemist).filter(Chemist.mr_id == mr_id, Chemist.is_active == True).all()
 
 
 class DistributorService:
-    """Distributor management service"""
-    
     @staticmethod
     def create_distributor(db: Session, mr_id: int, distributor_data: DistributorCreate) -> Distributor:
         """Create a new distributor profile"""
@@ -204,5 +179,4 @@ class DistributorService:
     
     @staticmethod
     def get_mr_distributors(db: Session, mr_id: int) -> List[Distributor]:
-        """Get all distributors for an MR"""
         return db.query(Distributor).filter(Distributor.mr_id == mr_id, Distributor.is_active == True).all()

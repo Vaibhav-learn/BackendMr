@@ -1,6 +1,3 @@
-"""
-Leave Management Routes
-"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -18,7 +15,6 @@ def apply_leave(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    """Apply for leave"""
     db_leave = Leave(
         user_id=user_id,
         leave_type=leave.leave_type,
@@ -37,7 +33,6 @@ def apply_leave(
 
 @router.get("", response_model=List[LeaveResponse])
 def get_my_leaves(user_id: int, db: Session = Depends(get_db)):
-    """Get all leaves for current user"""
     leaves = db.query(Leave).filter(
         Leave.user_id == user_id
     ).order_by(Leave.created_at.desc()).all()
@@ -46,7 +41,6 @@ def get_my_leaves(user_id: int, db: Session = Depends(get_db)):
 
 @router.get("/{leave_id}", response_model=LeaveResponse)
 def get_leave(leave_id: int, db: Session = Depends(get_db)):
-    """Get leave details"""
     leave = db.query(Leave).filter(Leave.id == leave_id).first()
     
     if not leave:
@@ -65,7 +59,6 @@ def approve_leave(
     admin_id: int,
     db: Session = Depends(get_db)
 ):
-    """Approve or reject leave (Admin only)"""
     leave = db.query(Leave).filter(Leave.id == leave_id).first()
     
     if not leave:

@@ -17,8 +17,6 @@ def check_in(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    """Record employee check-in"""
-    # Check if already checked in
     today_attendance = AttendanceService.get_today_attendance(db, user_id)
     if today_attendance and today_attendance.check_out_time is None:
         raise HTTPException(
@@ -50,7 +48,6 @@ def check_out(
 
 @router.get("/today", response_model=AttendanceResponse)
 def get_today_attendance(user_id: int, db: Session = Depends(get_db)):
-    """Get today's attendance"""
     attendance = AttendanceService.get_today_attendance(db, user_id)
     
     if not attendance:
@@ -68,6 +65,5 @@ def get_attendance_history(
     limit: int = 30,
     db: Session = Depends(get_db)
 ):
-    """Get attendance history"""
     history = AttendanceService.get_attendance_history(db, user_id, limit)
     return history

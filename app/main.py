@@ -11,10 +11,8 @@ from app.routes import (
     dcr, orders, leaves, targets, salary, notifications, profile, admin
 )
 
-# Initialize database
 init_db()
 
-# Create FastAPI app
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
@@ -22,7 +20,6 @@ app = FastAPI(
     description="MR & ASM Reporting Application Backend API"
 )
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.ALLOWED_ORIGINS,
@@ -31,13 +28,11 @@ app.add_middleware(
     allow_headers=settings.ALLOWED_HEADERS,
 )
 
-# Add trusted host middleware
 app.add_middleware(
     TrustedHostMiddleware,
     allowed_hosts=["localhost", "127.0.0.1", "*"]
 )
 
-# Include routers
 app.include_router(auth.router)
 app.include_router(attendance.router)
 app.include_router(doctors.router)
@@ -55,7 +50,6 @@ app.include_router(admin.router)
 
 @app.get("/", tags=["Health"])
 def read_root():
-    """Root endpoint - Health check"""
     return {
         "status": "healthy",
         "message": f"Welcome to {settings.APP_NAME}",
@@ -65,7 +59,6 @@ def read_root():
 
 @app.get("/health", tags=["Health"])
 def health_check():
-    """Health check endpoint"""
     return {
         "status": "ok",
         "database": "connected"
@@ -74,7 +67,6 @@ def health_check():
 
 @app.get("/api/v1", tags=["Health"])
 def api_status():
-    """API status endpoint"""
     return {
         "api": settings.APP_NAME,
         "version": settings.APP_VERSION,

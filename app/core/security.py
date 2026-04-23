@@ -1,23 +1,17 @@
-"""
-Security Utilities: JWT, Password Hashing, etc.
-"""
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 from .config import settings
 
-# Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def hash_password(password: str) -> str:
-    """Hash a password"""
     return pwd_context.hash(password)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Verify a password against its hash"""
     return pwd_context.verify(plain_password, hashed_password)
 
 
@@ -25,7 +19,6 @@ def create_access_token(
     data: Dict[str, Any],
     expires_delta: Optional[timedelta] = None
 ) -> str:
-    """Create JWT access token"""
     to_encode = data.copy()
     
     if expires_delta:
@@ -47,7 +40,6 @@ def create_access_token(
 
 
 def create_refresh_token(data: Dict[str, Any]) -> str:
-    """Create JWT refresh token"""
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
     to_encode.update({"exp": expire})
@@ -62,7 +54,6 @@ def create_refresh_token(data: Dict[str, Any]) -> str:
 
 
 def decode_token(token: str) -> Optional[Dict[str, Any]]:
-    """Decode JWT token"""
     try:
         payload = jwt.decode(
             token,

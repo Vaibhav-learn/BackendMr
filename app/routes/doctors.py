@@ -1,6 +1,3 @@
-"""
-Doctor Network Routes
-"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -17,14 +14,12 @@ def create_doctor(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    """Create a new doctor profile"""
     db_doctor = DoctorService.create_doctor(db, user_id, doctor)
     return db_doctor
 
 
 @router.get("/{doctor_id}", response_model=DoctorResponse)
 def get_doctor(doctor_id: int, db: Session = Depends(get_db)):
-    """Get doctor profile"""
     doctor = DoctorService.get_doctor(db, doctor_id)
     
     if not doctor:
@@ -38,7 +33,6 @@ def get_doctor(doctor_id: int, db: Session = Depends(get_db)):
 
 @router.get("", response_model=List[DoctorResponse])
 def get_my_doctors(user_id: int, db: Session = Depends(get_db)):
-    """Get all doctors for current user"""
     doctors = DoctorService.get_mr_doctors(db, user_id)
     return doctors
 
@@ -49,7 +43,6 @@ def update_doctor(
     doctor_update: DoctorUpdate,
     db: Session = Depends(get_db)
 ):
-    """Update doctor profile"""
     doctor = DoctorService.update_doctor(db, doctor_id, doctor_update.dict(exclude_unset=True))
     
     if not doctor:
@@ -63,7 +56,6 @@ def update_doctor(
 
 @router.delete("/{doctor_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_doctor(doctor_id: int, db: Session = Depends(get_db)):
-    """Delete doctor profile"""
     doctor = DoctorService.get_doctor(db, doctor_id)
     
     if not doctor:

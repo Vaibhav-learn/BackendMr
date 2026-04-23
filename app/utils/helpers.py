@@ -1,16 +1,9 @@
-"""
-Utility Helper Functions
-"""
 from typing import Dict, Any, Optional
 import math
 
 
 def calculate_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    """
-    Calculate distance between two coordinates using Haversine formula
-    Returns distance in kilometers
-    """
-    R = 6371  # Earth's radius in kilometers
+    R = 6371
     
     lat1_rad = math.radians(lat1)
     lat2_rad = math.radians(lat2)
@@ -31,17 +24,11 @@ def is_within_geofence(
     assigned_lon: float, 
     radius_km: float = 5.0
 ) -> bool:
-    """
-    Check if user is within geofence radius
-    """
     distance = calculate_distance(user_lat, user_lon, assigned_lat, assigned_lon)
     return distance <= radius_km
 
 
 def paginate_query(query, page: int = 1, page_size: int = 10):
-    """
-    Paginate database query
-    """
     if page < 1:
         page = 1
     if page_size < 1 or page_size > 100:
@@ -52,9 +39,6 @@ def paginate_query(query, page: int = 1, page_size: int = 10):
 
 
 def get_pagination_meta(total_count: int, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
-    """
-    Generate pagination metadata
-    """
     total_pages = (total_count + page_size - 1) // page_size
     return {
         "page": page,
@@ -65,9 +49,6 @@ def get_pagination_meta(total_count: int, page: int = 1, page_size: int = 10) ->
 
 
 def format_error_response(detail: str, error_code: Optional[str] = None) -> Dict[str, Any]:
-    """
-    Format error response
-    """
     return {
         "detail": detail,
         "error_code": error_code or "ERROR",

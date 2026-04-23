@@ -1,6 +1,3 @@
-"""
-Pydantic Schemas for Request/Response Validation
-"""
 from pydantic import BaseModel, EmailStr, Field, validator
 from datetime import datetime
 from typing import Optional, List
@@ -12,8 +9,6 @@ class UserRole(str, Enum):
     ASM = "ASM"
     ADMIN = "ADMIN"
 
-
-# ============= User Schemas =============
 class UserBase(BaseModel):
     employee_id: str = Field(..., min_length=3, max_length=50)
     email: EmailStr
@@ -52,7 +47,6 @@ class UserResponse(UserBase):
         from_attributes = True
 
 
-# ============= Auth Schemas =============
 class LoginRequest(BaseModel):
     email: str
     password: str
@@ -68,7 +62,6 @@ class RefreshTokenRequest(BaseModel):
     refresh_token: str
 
 
-# ============= Attendance Schemas =============
 class AttendanceCheckIn(BaseModel):
     latitude: str
     longitude: str
@@ -95,7 +88,6 @@ class AttendanceResponse(BaseModel):
         from_attributes = True
 
 
-# ============= Doctor Schemas =============
 class DoctorBase(BaseModel):
     name: str = Field(..., min_length=2, max_length=255)
     email: Optional[EmailStr] = None
@@ -136,7 +128,6 @@ class DoctorResponse(DoctorBase):
         from_attributes = True
 
 
-# ============= Chemist Schemas =============
 class ChemistBase(BaseModel):
     shop_name: str = Field(..., max_length=255)
     owner_name: str = Field(..., max_length=255)
@@ -163,7 +154,6 @@ class ChemistResponse(ChemistBase):
         from_attributes = True
 
 
-# ============= Distributor Schemas =============
 class DistributorBase(BaseModel):
     business_name: str = Field(..., max_length=255)
     contact_person: str = Field(..., max_length=255)
@@ -190,7 +180,6 @@ class DistributorResponse(DistributorBase):
         from_attributes = True
 
 
-# ============= Doctor Call Report Schemas =============
 class DCRCreate(BaseModel):
     doctor_id: int
     products_discussed: Optional[str] = None
@@ -212,8 +201,6 @@ class DCRResponse(BaseModel):
     class Config:
         from_attributes = True
 
-
-# ============= Order Schemas =============
 class OrderCreate(BaseModel):
     product_details: str = Field(..., min_length=5, max_length=1000)
     quantity: int = Field(..., gt=0)
@@ -239,7 +226,6 @@ class OrderResponse(BaseModel):
         from_attributes = True
 
 
-# ============= Leave Schemas =============
 class LeaveCreate(BaseModel):
     leave_type: str = Field(..., min_length=3, max_length=50)
     start_date: datetime
@@ -273,7 +259,6 @@ class LeaveResponse(BaseModel):
         from_attributes = True
 
 
-# ============= Target Schemas =============
 class TargetCreate(BaseModel):
     month: str
     year: int
@@ -305,8 +290,6 @@ class TargetResponse(BaseModel):
     class Config:
         from_attributes = True
 
-
-# ============= Salary Slip Schemas =============
 class SalarySlipResponse(BaseModel):
     id: int
     user_id: int
@@ -323,8 +306,6 @@ class SalarySlipResponse(BaseModel):
     class Config:
         from_attributes = True
 
-
-# ============= Notification Schemas =============
 class NotificationResponse(BaseModel):
     id: int
     user_id: int
@@ -342,7 +323,6 @@ class MarkNotificationAsRead(BaseModel):
     is_read: bool
 
 
-# ============= Error Response Schema =============
 class ErrorResponse(BaseModel):
     detail: str
     error_code: Optional[str] = None

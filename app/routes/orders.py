@@ -1,6 +1,3 @@
-"""
-Order Management Routes
-"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -18,7 +15,6 @@ def create_order(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    """Create a new order"""
     db_order = Order(
         mr_id=user_id,
         product_details=order.product_details,
@@ -36,7 +32,6 @@ def create_order(
 
 @router.get("", response_model=List[OrderResponse])
 def get_my_orders(user_id: int, db: Session = Depends(get_db)):
-    """Get all orders for current user"""
     orders = db.query(Order).filter(
         Order.mr_id == user_id
     ).order_by(Order.created_at.desc()).all()
@@ -45,7 +40,6 @@ def get_my_orders(user_id: int, db: Session = Depends(get_db)):
 
 @router.get("/{order_id}", response_model=OrderResponse)
 def get_order(order_id: int, db: Session = Depends(get_db)):
-    """Get order details"""
     order = db.query(Order).filter(Order.id == order_id).first()
     
     if not order:
@@ -64,7 +58,6 @@ def approve_order(
     admin_id: int,
     db: Session = Depends(get_db)
 ):
-    """Approve or reject order (Admin only)"""
     order = db.query(Order).filter(Order.id == order_id).first()
     
     if not order:

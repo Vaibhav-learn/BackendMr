@@ -1,6 +1,3 @@
-"""
-Distributor Routes
-"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -17,7 +14,6 @@ def create_distributor(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    """Create a new distributor profile"""
     db_distributor = DistributorService.create_distributor(db, user_id, distributor)
     return db_distributor
 

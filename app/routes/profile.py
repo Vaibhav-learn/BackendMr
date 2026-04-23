@@ -1,6 +1,3 @@
-"""
-User Profile Routes
-"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -12,7 +9,6 @@ router = APIRouter(prefix="/api/v1/profile", tags=["Profile"])
 
 @router.get("", response_model=UserResponse)
 def get_profile(user_id: int, db: Session = Depends(get_db)):
-    """Get current user profile"""
     user = UserService.get_user_by_id(db, user_id)
     
     if not user:
@@ -30,7 +26,6 @@ def update_profile(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    """Update user profile"""
     user = UserService.get_user_by_id(db, user_id)
     
     if not user:

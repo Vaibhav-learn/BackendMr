@@ -1,6 +1,3 @@
-"""
-Notification Routes
-"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -13,7 +10,6 @@ router = APIRouter(prefix="/api/v1/notifications", tags=["Notifications"])
 
 @router.get("", response_model=List[NotificationResponse])
 def get_notifications(user_id: int, db: Session = Depends(get_db)):
-    """Get all notifications for current user"""
     notifications = db.query(Notification).filter(
         Notification.user_id == user_id
     ).order_by(Notification.created_at.desc()).all()
@@ -22,7 +18,6 @@ def get_notifications(user_id: int, db: Session = Depends(get_db)):
 
 @router.get("/unread", response_model=List[NotificationResponse])
 def get_unread_notifications(user_id: int, db: Session = Depends(get_db)):
-    """Get unread notifications"""
     notifications = db.query(Notification).filter(
         Notification.user_id == user_id,
         Notification.is_read == False
@@ -32,7 +27,6 @@ def get_unread_notifications(user_id: int, db: Session = Depends(get_db)):
 
 @router.get("/{notification_id}", response_model=NotificationResponse)
 def get_notification(notification_id: int, db: Session = Depends(get_db)):
-    """Get specific notification"""
     notification = db.query(Notification).filter(
         Notification.id == notification_id
     ).first()
@@ -52,7 +46,6 @@ def mark_as_read(
     read_data: MarkNotificationAsRead,
     db: Session = Depends(get_db)
 ):
-    """Mark notification as read/unread"""
     notification = db.query(Notification).filter(
         Notification.id == notification_id
     ).first()
@@ -72,7 +65,6 @@ def mark_as_read(
 
 @router.post("/mark-all-read")
 def mark_all_as_read(user_id: int, db: Session = Depends(get_db)):
-    """Mark all notifications as read"""
     db.query(Notification).filter(
         Notification.user_id == user_id,
         Notification.is_read == False

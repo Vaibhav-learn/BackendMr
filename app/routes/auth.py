@@ -1,6 +1,3 @@
-"""
-Authentication Routes
-"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -16,7 +13,6 @@ router = APIRouter(prefix="/api/v1/auth", tags=["Authentication"])
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register(user: UserCreate, db: Session = Depends(get_db)):
-    """Register a new user"""
     existing_user = UserService.get_user_by_email(db, user.email)
     if existing_user:
         raise HTTPException(
@@ -30,7 +26,6 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=TokenResponse)
 def login(credentials: LoginRequest, db: Session = Depends(get_db)):
-    """Login user and return tokens"""
     user = UserService.authenticate_user(db, credentials.email, credentials.password)
     
     if not user:
@@ -44,11 +39,9 @@ def login(credentials: LoginRequest, db: Session = Depends(get_db)):
             status_code=status.HTTP_403_FORBIDDEN,
             detail="User account is inactive"
         )
-    
-    # Update last login
+
     UserService.update_last_login(db, user.id)
-    
-    # Create tokens
+
     access_token = create_access_token({"sub": str(user.id), "email": user.email})
     refresh_token = create_refresh_token({"sub": str(user.id)})
     
@@ -61,7 +54,6 @@ def login(credentials: LoginRequest, db: Session = Depends(get_db)):
 
 @router.post("/refresh", response_model=TokenResponse)
 def refresh_token(request: RefreshTokenRequest, db: Session = Depends(get_db)):
-    """Refresh access token using refresh token"""
     payload = decode_token(request.refresh_token)
     
     if not payload:
@@ -91,10 +83,9 @@ def refresh_token(request: RefreshTokenRequest, db: Session = Depends(get_db)):
 @router.post("/change-password")
 def change_password(
     request: UserChangePassword,
-    current_user_id: int = Depends(lambda: 1),  # This will be replaced with actual auth dependency
+    current_user_id: int = Depends(lambda: 1),
     db: Session = Depends(get_db)
 ):
-    """Change user password"""
     user = UserService.get_user_by_id(db, current_user_id)
     
     if not user:

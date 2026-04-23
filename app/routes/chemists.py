@@ -1,6 +1,3 @@
-"""
-Chemist Shop Routes
-"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -17,13 +14,11 @@ def create_chemist(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    """Create a new chemist profile"""
     db_chemist = ChemistService.create_chemist(db, user_id, chemist)
     return db_chemist
 
 
 @router.get("", response_model=List[ChemistResponse])
 def get_my_chemists(user_id: int, db: Session = Depends(get_db)):
-    """Get all chemists for current user"""
     chemists = ChemistService.get_mr_chemists(db, user_id)
     return chemists
